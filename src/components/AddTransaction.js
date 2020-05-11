@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import * as actions from '../actions'
+import { toast } from 'react-toastify'
 
 const Article = styled.article`
   margin: 3em 0 0;
@@ -85,6 +86,15 @@ const AddTransaction = () => {
     }
 
     dispatch(actions.createTransaction(newTransaction))
+
+    toast.success('✅ Transaction Added', {
+      position: 'top-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+    })
     setText('')
     setAmount('')
   }

@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { ToastContainer } from 'react-toastify'
+
 import Header from './components/Header'
 import Balance from './components/Balance'
 import IncomeExpense from './components/IncomeExpense'
@@ -21,6 +23,17 @@ const App = () => {
   return (
     <Div>
       <Container>
+        <ToastContainer
+          position='top-center'
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+        />
         <Header />
         <Balance />
         <IncomeExpense />
