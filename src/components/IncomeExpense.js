@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 
 const Box = styled.div`
   background: #fbfafb;
@@ -38,15 +39,27 @@ const RightItem = styled.div`
 `
 
 const IncomeExpense = () => {
+  const transactions = useSelector(state => state.transactions.data)
+  const amounts = transactions.map(transaction => transaction.amount)
+  const incomeArray = amounts.filter(amount => amount > 0)
+  const expenseArray = amounts.filter(amount => amount < 0)
+  const income = incomeArray.reduce(
+    (accumulator, currentValue) => (accumulator += currentValue),
+    0
+  )
+  const expense = expenseArray.reduce(
+    (accumulator, currentValue) => (accumulator += currentValue),
+    0
+  )
   return (
     <Box>
       <LeftItem>
         <h3>Income</h3>
-        <span>$0.00</span>
+        <span>${income.toFixed(2)}</span>
       </LeftItem>
       <RightItem>
         <h3>Expense</h3>
-        <span>$0.00</span>
+        <span>${Math.abs(expense).toFixed(2)}</span>
       </RightItem>
     </Box>
   )
