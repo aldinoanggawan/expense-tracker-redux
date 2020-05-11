@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import * as actions from '../actions'
+import { toast } from 'react-toastify'
 
 const Li = styled.li`
   border-radius: 2px;
@@ -57,6 +58,14 @@ const Transaction = ({ id, text, amount }) => {
 
   const handleClick = () => {
     dispatch(actions.deleteTransaction(id))
+    toast.error('✅ Transaction Deleted', {
+      position: 'top-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+    })
   }
 
   return (
