@@ -17,24 +17,44 @@ const Li = styled.li`
   & + & {
     margin-top: 1em;
   }
+
+  &:hover Button,
+  &:focus Button {
+    opacity: 1;
+  }
 `
 
 const Span = styled.span`
   letter-spacing: 0.5px;
 `
 
+const Button = styled.button`
+  cursor: pointer;
+  position: absolute;
+  background: #f44336;
+  color: #fbfafb;
+  border: none;
+  height: 24px;
+  transform: translate(-180%, -7%);
+  opacity: 0;
+  transition: opacity 350ms ease;
+`
+
 const Transaction = () => {
   return (
     <>
       <Li>
+        <Button>X</Button>
         <span>Keyboard</span>
         <Span>-$100.00</Span>
       </Li>
       <Li>
+        <Button>X</Button>
         <span>Mouse</span>
         <Span>-$50.00</Span>
       </Li>
       <Li>
+        <Button>X</Button>
         <span>Headphones</span>
         <Span>-$200.00</Span>
       </Li>

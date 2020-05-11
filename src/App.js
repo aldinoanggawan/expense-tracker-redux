@@ -12,7 +12,7 @@ const Div = styled.div`
 
 const Container = styled.div`
   padding: 1em 0;
-  width: 90%;
+  width: 85%;
   max-width: 450px;
   margin: 0 auto;
 `
