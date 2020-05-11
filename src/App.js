@@ -22,18 +22,18 @@ const Container = styled.div`
 const App = () => {
   return (
     <Div>
+      <ToastContainer
+        position='top-center'
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+      />
       <Container>
-        <ToastContainer
-          position='top-center'
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover={false}
-        />
         <Header />
         <Balance />
         <IncomeExpense />

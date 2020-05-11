@@ -1,21 +1,17 @@
-import {
-  CREATE_TRANSACTION_REQUEST,
-  CREATE_TRANSACTION_SUCCESS,
-  CREATE_TRANSACTION_FAILURE,
-} from './actionTypes'
+import * as actionTypes from './actionTypes'
 import Axios from 'axios'
 
 export const createTransactionRequest = () => ({
-  type: CREATE_TRANSACTION_REQUEST,
+  type: actionTypes.CREATE_TRANSACTION_REQUEST,
 })
 
 const createTransactionSuccess = transaction => ({
-  type: CREATE_TRANSACTION_SUCCESS,
+  type: actionTypes.CREATE_TRANSACTION_SUCCESS,
   payload: transaction,
 })
 
 const createTransactionFailure = error => ({
-  type: CREATE_TRANSACTION_FAILURE,
+  type: actionTypes.CREATE_TRANSACTION_FAILURE,
   payload: error,
 })
 
@@ -38,6 +34,36 @@ export const createTransaction = newTransaction => {
     } catch (error) {
       const errorMsg = error.error
       dispatch(createTransactionFailure(errorMsg))
+    }
+  }
+}
+
+export const readTransactionsRequest = () => ({
+  type: actionTypes.READ_TRANSACTIONS_REQUEST,
+})
+
+const readTransactionsSuccess = transactions => ({
+  type: actionTypes.READ_TRANSACTIONS_SUCCESS,
+  payload: transactions,
+})
+
+const readTransactionsFailure = error => ({
+  type: actionTypes.READ_TRANSACTIONS_FAILURE,
+  payload: error,
+})
+
+export const readTransactions = () => {
+  return async dispatch => {
+    dispatch(readTransactionsRequest())
+    try {
+      const response = await Axios.get(
+        'http://127.0.0.1:5000/api/v1/transactions'
+      )
+      const transactions = await response.data.data
+      dispatch(readTransactionsSuccess(transactions))
+    } catch (error) {
+      const errorMsg = error.error
+      dispatch(readTransactionsFailure(errorMsg))
     }
   }
 }

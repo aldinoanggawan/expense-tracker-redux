@@ -1,8 +1,4 @@
-import {
-  CREATE_TRANSACTION_REQUEST,
-  CREATE_TRANSACTION_SUCCESS,
-  CREATE_TRANSACTION_FAILURE,
-} from '../actions/actionTypes'
+import * as actionTypes from '../actions/actionTypes'
 
 const initialState = {
   isLoading: false,
@@ -13,22 +9,38 @@ const initialState = {
 
 const transactions = (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_TRANSACTION_REQUEST:
+    case actionTypes.CREATE_TRANSACTION_REQUEST:
       return {
         ...state,
         isLoading: true,
       }
-    case CREATE_TRANSACTION_SUCCESS:
+    case actionTypes.CREATE_TRANSACTION_SUCCESS:
       return {
         ...state,
         isLoading: false,
         data: [...state.data, action.payload.data],
         message: action.payload.message,
       }
-    case CREATE_TRANSACTION_FAILURE:
+    case actionTypes.CREATE_TRANSACTION_FAILURE:
       return {
         ...state,
         isLoading: false,
+        error: action.payload,
+      }
+    case actionTypes.READ_TRANSACTIONS_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      }
+    case actionTypes.READ_TRANSACTIONS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        data: action.payload,
+      }
+    case actionTypes.READ_TRANSACTIONS_FAILURE:
+      return {
+        ...state,
         error: action.payload,
       }
     default:

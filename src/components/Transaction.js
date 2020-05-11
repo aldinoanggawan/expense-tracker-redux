@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const Li = styled.li`
   border-radius: 2px;
-  border-right: 4px solid #f44336;
   padding: 0.65em 1em;
   background: #fbfafb;
 
@@ -13,6 +12,14 @@ const Li = styled.li`
 
   display: flex;
   justify-content: space-between;
+
+  &.plus {
+    border-right: 4px solid green;
+  }
+
+  &.minus {
+    border-right: 4px solid #f44336;
+  }
 
   & + & {
     margin-top: 1em;
@@ -40,23 +47,18 @@ const Button = styled.button`
   transition: opacity 350ms ease;
 `
 
-const Transaction = () => {
+const Transaction = ({ text, amount }) => {
+  const sign = amount > 0 ? '+' : '-'
+  const indicator = amount > 0 ? 'plus' : 'minus'
+
   return (
     <>
-      <Li>
+      <Li className={indicator}>
         <Button>X</Button>
-        <span>Keyboard</span>
-        <Span>-$100.00</Span>
-      </Li>
-      <Li>
-        <Button>X</Button>
-        <span>Mouse</span>
-        <Span>-$50.00</Span>
-      </Li>
-      <Li>
-        <Button>X</Button>
-        <span>Headphones</span>
-        <Span>-$200.00</Span>
+        <span>{text}</span>
+        <Span>
+          {sign}${Math.abs(amount).toFixed(2)}
+        </Span>
       </Li>
     </>
   )
