@@ -19,6 +19,15 @@ const H2 = styled.h2`
   color: #fbfafb;
 `
 
+const P = styled.p`
+  text-transform: uppercase;
+  margin-top: 2em;
+  color: #fbfafb;
+  font-size: 1.1rem;
+  text-align: center;
+  opacity: 0.3;
+`
+
 const TransactionList = () => {
   const transactions = useSelector(state => state.transactions.data)
 
@@ -31,11 +40,15 @@ const TransactionList = () => {
   return (
     <Article>
       <H2>Transaction History</H2>
-      <Ul>
-        {transactions.map(transaction => (
-          <Transaction key={transaction.id} {...transaction} />
-        ))}
-      </Ul>
+      {transactions.length > 0 ? (
+        <Ul>
+          {transactions.map(transaction => (
+            <Transaction key={transaction.id} {...transaction} />
+          ))}
+        </Ul>
+      ) : (
+        <P>No transaction added</P>
+      )}
     </Article>
   )
 }
