@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 
 const Div = styled.div`
   margin-top: 3em;
@@ -17,10 +18,15 @@ const Span = styled.span`
 `
 
 const Balance = () => {
+  const transactions = useSelector(state => state.transactions.data)
+  const amounts = transactions.map(transaction => transaction.amount)
+  const totalBalance = amounts
+    .reduce((accumulator, currentValue) => (accumulator += currentValue), 0)
+    .toFixed(2)
   return (
     <Div>
       <H2>Balance</H2>
-      <Span>$0.00</Span>
+      <Span>${totalBalance}</Span>
     </Div>
   )
 }
