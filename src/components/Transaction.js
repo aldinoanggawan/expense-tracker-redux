@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
+import * as actions from '../actions'
 
 const Li = styled.li`
   border-radius: 2px;
@@ -47,14 +49,20 @@ const Button = styled.button`
   transition: opacity 350ms ease;
 `
 
-const Transaction = ({ text, amount }) => {
+const Transaction = ({ id, text, amount }) => {
+  const dispatch = useDispatch()
+
   const sign = amount > 0 ? '+' : '-'
   const indicator = amount > 0 ? 'plus' : 'minus'
+
+  const handleClick = () => {
+    dispatch(actions.deleteTransaction(id))
+  }
 
   return (
     <>
       <Li className={indicator}>
-        <Button>X</Button>
+        <Button onClick={handleClick}>X</Button>
         <span>{text}</span>
         <Span>
           {sign}${Math.abs(amount).toFixed(2)}

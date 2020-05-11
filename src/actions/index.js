@@ -67,3 +67,30 @@ export const readTransactions = () => {
     }
   }
 }
+
+export const deleteTransactionRequest = () => ({
+  type: actionTypes.DELETE_TRANSACTION_REQUEST,
+})
+
+const deleteTransactionSuccess = id => ({
+  type: actionTypes.DELETE_TRANSACTION_SUCCESS,
+  payload: id,
+})
+
+const deleteTransactionFailure = error => ({
+  type: actionTypes.DELETE_TRANSACTION_FAILURE,
+  payload: error,
+})
+
+export const deleteTransaction = id => {
+  return async dispatch => {
+    dispatch(deleteTransactionRequest())
+    try {
+      await Axios.post(`http://127.0.0.1:5000/api/v1/transaction/${id}`)
+      dispatch(deleteTransactionSuccess(id))
+    } catch (error) {
+      const errorMsg = error.error
+      dispatch(deleteTransactionFailure(errorMsg))
+    }
+  }
+}
