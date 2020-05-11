@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
+import * as actions from '../actions'
 
 const Article = styled.article`
   margin: 3em 0 0;
@@ -16,8 +18,6 @@ const H2 = styled.h2`
   margin-top: 0;
   margin-bottom: 1em;
 `
-
-const Form = styled.form``
 
 const Label = styled.label`
   font-size: 1.2em;
@@ -38,41 +38,87 @@ const Input = styled.input`
   &:focus {
     outline: none;
   }
-`
 
-const Button = styled.button`
-  cursor: pointer;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  font-weight: bold;
-  width: 100%;
-  height: 35px;
-  background: #3073a9;
-  color: white;
-  border: none;
-  border-radius: 3px;
+  &.btn {
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: bold;
+    width: 100%;
+    height: 35px;
+    background: #3073a9;
+    color: white;
+    border: none;
+    border-radius: 3px;
 
-  &:hover,
-  &:focus {
-    opacity: 0.85;
+    &:hover,
+    &:focus {
+      opacity: 0.85;
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.4;
+    }
   }
 `
 
 const AddTransaction = () => {
+  const dispatch = useDispatch()
+
+  const [text, setText] = useState('')
+  const [amount, setAmount] = useState('')
+
+  const handleInputText = e => {
+    setText(e.target.value)
+  }
+
+  const handleInputAmount = e => {
+    setAmount(e.target.value)
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    const newTransaction = {
+      text,
+      amount: +amount,
+    }
+
+    dispatch(actions.createTransaction(newTransaction))
+    setText('')
+    setAmount('')
+  }
+
   return (
     <Article>
       <H2>Add Transaction</H2>
-      <Form>
+      <form onSubmit={handleSubmit}>
         <div>
           <Label>Text</Label>
-          <Input type='text' placeholder='Enter text...' />
+          <Input
+            onChange={handleInputText}
+            value={text}
+            type='text'
+            placeholder='Enter text...'
+          />
         </div>
         <div>
           <Label>Amount</Label>
-          <Input type='number' placeholder='Enter amount...' />
+          <Input
+            onChange={handleInputAmount}
+            value={amount}
+            type='number'
+            step='0.01'
+            placeholder='Enter amount...'
+          />
         </div>
-        <Button>Add</Button>
-      </Form>
+        <Input
+          className='btn'
+          disabled={!text || !amount}
+          type='submit'
+          value='Add'
+        />
+      </form>
     </Article>
   )
 }
