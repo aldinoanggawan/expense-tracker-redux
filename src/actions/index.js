@@ -1,5 +1,6 @@
-import * as actionTypes from './actionTypes'
 import Axios from 'axios'
+import { toast } from 'react-toastify'
+import * as actionTypes from './actionTypes'
 
 export const createTransactionRequest = () => ({
   type: actionTypes.CREATE_TRANSACTION_REQUEST,
@@ -31,9 +32,25 @@ export const createTransaction = newTransaction => {
       )
       const transaction = await response.data
       dispatch(createTransactionSuccess(transaction))
+      toast.success('✅ Transaction Added', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+      })
     } catch (error) {
-      const errorMsg = error.error
+      const errorMsg = error.message
       dispatch(createTransactionFailure(errorMsg))
+      toast.error('🚫 Uh-oh something went wrong. Make sure you enter the right amount.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+      })
     }
   }
 }
@@ -56,9 +73,7 @@ export const readTransactions = () => {
   return async dispatch => {
     dispatch(readTransactionsRequest())
     try {
-      const response = await Axios.get(
-        'http://127.0.0.1:5000/api/v1/transactions'
-      )
+      const response = await Axios.get('http://127.0.0.1:5000/api/v1/transactions')
       const transactions = await response.data.data
       dispatch(readTransactionsSuccess(transactions))
     } catch (error) {
@@ -88,6 +103,14 @@ export const deleteTransaction = id => {
     try {
       await Axios.post(`http://127.0.0.1:5000/api/v1/transaction/${id}`)
       dispatch(deleteTransactionSuccess(id))
+      toast.error('✅ Transaction Deleted', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+      })
     } catch (error) {
       const errorMsg = error.error
       dispatch(deleteTransactionFailure(errorMsg))

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import * as actions from '../actions'
-import { toast } from 'react-toastify'
 
 const Article = styled.article`
   margin: 3em 0 0;
@@ -11,8 +10,8 @@ const Article = styled.article`
   border: none;
   border-radius: 5px;
   padding: 1em;
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
-    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12),
+    0 8px 10px -5px rgba(0, 0, 0, 0.2);
 `
 
 const H2 = styled.h2`
@@ -86,15 +85,6 @@ const AddTransaction = () => {
     }
 
     dispatch(actions.createTransaction(newTransaction))
-
-    toast.success('✅ Transaction Added', {
-      position: 'top-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-    })
     setText('')
     setAmount('')
   }
@@ -105,12 +95,7 @@ const AddTransaction = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <Label>Text</Label>
-          <Input
-            onChange={handleInputText}
-            value={text}
-            type='text'
-            placeholder='Enter text...'
-          />
+          <Input onChange={handleInputText} value={text} type='text' placeholder='Enter text...' />
         </div>
         <div>
           <Label>Amount</Label>
@@ -122,12 +107,7 @@ const AddTransaction = () => {
             placeholder='Enter amount...'
           />
         </div>
-        <Input
-          className='btn'
-          disabled={!text || !amount}
-          type='submit'
-          value='Add'
-        />
+        <Input className='btn' disabled={!text || !amount} type='submit' value='Add' />
       </form>
     </Article>
   )

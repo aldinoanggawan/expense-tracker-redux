@@ -36,7 +36,7 @@ const transactions = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        data: action.payload,
+        data: action.payload.sort((a, b) => a.id - b.id),
       }
     case actionTypes.READ_TRANSACTIONS_FAILURE:
       return {
@@ -52,9 +52,7 @@ const transactions = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        data: state.data.filter(
-          transaction => transaction.id !== action.payload
-        ),
+        data: state.data.filter(transaction => transaction.id !== action.payload),
       }
     case actionTypes.DELETE_TRANSACTION_FAILURE:
       return {
