@@ -9,8 +9,8 @@ const Box = styled.div`
   border-radius: 3px;
   display: flex;
   justify-content: space-between;
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
-    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12),
+    0 8px 10px -5px rgba(0, 0, 0, 0.2);
 
   span {
     letter-spacing: 1.5px;
@@ -39,14 +39,14 @@ const RightItem = styled.div`
 `
 
 const IncomeExpense = () => {
-  const transactions = useSelector(state => state.transactions.data)
+  const transactionsState = useSelector(state => state.transactions)
+  const transactions = transactionsState.data
+  const isLoading = transactionsState.isLoading
+
   const amounts = transactions.map(transaction => transaction.amount)
   const incomeArray = amounts.filter(amount => amount > 0)
   const expenseArray = amounts.filter(amount => amount < 0)
-  const income = incomeArray.reduce(
-    (accumulator, currentValue) => (accumulator += currentValue),
-    0
-  )
+  const income = incomeArray.reduce((accumulator, currentValue) => (accumulator += currentValue), 0)
   const expense = expenseArray.reduce(
     (accumulator, currentValue) => (accumulator += currentValue),
     0
@@ -55,11 +55,11 @@ const IncomeExpense = () => {
     <Box>
       <LeftItem>
         <h3>Income</h3>
-        <span>${income.toFixed(2)}</span>
+        {isLoading ? <span>Loading...</span> : <span>${income.toFixed(2)}</span>}
       </LeftItem>
       <RightItem>
         <h3>Expense</h3>
-        <span>${Math.abs(expense).toFixed(2)}</span>
+        {isLoading ? <span>Loading...</span> : <span>${Math.abs(expense).toFixed(2)}</span>}
       </RightItem>
     </Box>
   )

@@ -18,15 +18,19 @@ const Span = styled.span`
 `
 
 const Balance = () => {
-  const transactions = useSelector(state => state.transactions.data)
+  const transactionsState = useSelector(state => state.transactions)
+  const transactions = transactionsState.data
+  const isLoading = transactionsState.isLoading
+
   const amounts = transactions.map(transaction => transaction.amount)
   const totalBalance = amounts
     .reduce((accumulator, currentValue) => (accumulator += currentValue), 0)
     .toFixed(2)
+
   return (
     <Div>
       <H2>Balance</H2>
-      <Span>${totalBalance}</Span>
+      {isLoading ? <Span>Loading...</Span> : <Span>${totalBalance}</Span>}
     </Div>
   )
 }

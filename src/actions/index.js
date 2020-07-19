@@ -26,7 +26,7 @@ export const createTransaction = newTransaction => {
     }
     try {
       const response = await Axios.post(
-        process.env.REACT_APP_TRANSACTIONS_API,
+        'https://redux-expense-tracker.herokuapp.com/api/v1/transactions',
         newTransaction,
         config
       )
@@ -73,7 +73,9 @@ export const readTransactions = () => {
   return async dispatch => {
     dispatch(readTransactionsRequest())
     try {
-      const response = await Axios.get(process.env.REACT_APP_TRANSACTIONS_API)
+      const response = await Axios.get(
+        'https://redux-expense-tracker.herokuapp.com/api/v1/transactions'
+      )
       const transactions = await response.data.data
       dispatch(readTransactionsSuccess(transactions))
     } catch (error) {
@@ -101,7 +103,7 @@ export const deleteTransaction = id => {
   return async dispatch => {
     dispatch(deleteTransactionRequest())
     try {
-      await Axios.post(`${process.env.REACT_APP_DELETE_TRANSACTION_API}${id}`)
+      await Axios.post(`https://redux-expense-tracker.herokuapp.com/api/v1/transaction/${id}`)
       dispatch(deleteTransactionSuccess(id))
       toast.error('✅ Transaction Deleted', {
         position: 'top-center',

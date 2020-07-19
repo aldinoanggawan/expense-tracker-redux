@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { ToastContainer } from 'react-toastify'
 
@@ -20,6 +21,9 @@ const Container = styled.div`
 `
 
 const App = () => {
+  const isLoading = useSelector(state => state.transactions.isLoading)
+
+  console.log(isLoading)
   return (
     <Div>
       <ToastContainer

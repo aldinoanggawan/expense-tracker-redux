@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
-import Transaction from './Transaction'
 import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
+
+import Loader from './Loader'
+import Transaction from './Transaction'
 import * as actions from '../actions'
 
 const Article = styled.article`
@@ -29,7 +31,9 @@ const P = styled.p`
 `
 
 const TransactionList = () => {
-  const transactions = useSelector(state => state.transactions.data)
+  const transactionsState = useSelector(state => state.transactions)
+  const transactions = transactionsState.data
+  const isLoading = transactionsState.isLoading
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -40,7 +44,9 @@ const TransactionList = () => {
   return (
     <Article>
       <H2>Transaction History</H2>
-      {transactions.length > 0 ? (
+      {isLoading ? (
+        <Loader />
+      ) : transactions.length > 0 ? (
         <Ul>
           {transactions.map(transaction => (
             <Transaction key={transaction.id} {...transaction} />
